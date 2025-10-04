@@ -1,0 +1,63 @@
+﻿@using GameEngine.Settings
+@model GameEngine.ViewModels.GameDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Game.Name;
+}
+
+<div class="card border-2  overflow-hidden rounded-4 mb-3" style="max-width: 100%; border-color: indigo;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="@($"{FileSettings.ImagesPath}/{Model.Game.Cover}")" class="img-fluid h-100 object-fit-cover" alt="...">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h1 class="card-title fw-bolder">@Model.Game.Name</h1>
+                <span class="badge bg-success fs-5 mb-4">@Model.Game.Category?.Name</span>
+                <p class="card-text">@Model.Game.Description</p>
+
+                <div class="mb-4">
+                    @foreach (var gameDevice in Model.Game.Devices)
+                    {
+                        <i class="@gameDevice.Device.Icon ms-2 fs-2 text-primary"></i>
+                    }
+                </div>
+
+                <h5>Price: <span class="text-success">@Model.Game.Price.ToString("C")</span></h5>
+
+                <hr />
+
+                <div class="col-md-5">
+                    <!-- Add To Cart Form -->
+                    <form asp-controller="ShoppingCarts" asp-action="AddToCart" method="post">
+                        <input type="hidden" asp-for="Game.Id" name="gameId" />
+                        <div>
+                            <label asp-for="DeviceId" class="form-label mt-1"></label>
+                            <select class="form-select" asp-for="DeviceId" asp-items="Model.Devices"
+                                    data-placeholder="Select a category" data-minimum-results-for-search="Infinity">
+                                <option value=""></option>
+                            </select>
+                            <span asp-validation-for="DeviceId" class="text-danger"></span>
+                        </div>
+
+                        <div>
+                            <label asp-for="Quantity" class="form-label mt-3"></label>
+                            <input type="number" class="form-control" asp-for="Quantity" placeholder="Quantity">
+                            <span asp-validation-for="Quantity" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-3 px-4">Add to Cart</button>
+                    </form>
+                    <!-- End Add To Cart Form -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

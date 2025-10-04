@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Category>
+
+
+
+@if (User?.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <a asp-controller="Categories" asp-action="Create" class="btn btn-info text-dark btn-lg me-3">
+        <i class="bi bi-plus-circle"></i>
+        Add Category
+    </a>
+    
+    <a asp-controller="Categories" asp-action="Edit" class="btn btn-warning btn-lg">
+        <i class="bi bi-pencil-fill"></i>
+        Edit Category
+    </a>
+}
+
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning mt-5">
+        <h4 class="alert-heading">No Categories!</h4>
+        <p class="mb-0">No categories added yet.</p>
+    </div>
+}
+else{
+<!-- Search -->
+<div class="d-flex justify-content-center mt-3 mb-3">
+    <form class="d-flex" role="search" method="get" asp-controller="Categories" asp-action="Search">
+        <input class="form-control me-2" type="search" name="categoryName" placeholder="Search" />
+        <button class="d-flex btn btn-outline-success align-items-center" type="submit">
+            <i class="bi bi-search me-1"></i> Search
+        </button>
+    </form>
+</div>
+
+<div class="row mt-5">
+    @foreach (var category in Model)
+    {
+        <a class="col-lg-3 col-md-6 mb-4 d-flex justify-content-center text-decoration-none"
+           style="display: block; transition: transform 0.3s ease;"
+           asp-controller="Home"
+           asp-action="IndexByCategory"
+           asp-route-id="@category.Id">
+
+            <div class="card hover-zoom text-bg-success text-center p-4" style="width: 20rem; height: 150px;">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center h-100">
+                    <h2 class="card-title m-0 text-white">@category.Name</h2>
+                </div>
+            </div>
+        </a>
+    }
+</div>
+}
+
+<style>
+    .hover-zoom {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .hover-zoom:hover {
+            transform: scale(1.05);
+            z-index: 10;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+</style>

@@ -1,0 +1,62 @@
+﻿@using GameEngine.Settings
+@model GameEngine.ViewModels.ShoppingCartViewModel
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<h2 class="mb-4">Shopping Cart</h2>
+
+@if (!Model.Items.Any())
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <table class="table justify-content-center align-items-center table-hover">
+        <thead>
+            <tr>
+                <th class="text-center align-middle">Game</th>
+                <th class="text-center align-middle">Device</th>
+                <th class="text-center align-middle">Price per one item</th>
+                <th class="text-center align-middle">Quantity</th>
+                <th class="text-center align-middle">Subtotal</th>
+                <th class="text-center align-middle"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td class="text-center align-middle">
+                        <img src="@($"{FileSettings.ImagesPath}/{item.Game?.Cover}")" alt="@item.Game?.Name" class="pe-2" style="max-width: 90px" />
+                        @item.Game?.Name
+                    </td>
+                    <td class="text-center align-middle">@item.Device?.Name</td>
+                    <td class="text-center align-middle">@item.Game?.Price.ToString("C")</td>
+                    <td class="text-center align-middle">@item.Quantity</td>
+                    <td class="text-center align-middle">@(((item.Game?.Price ?? 0) * item.Quantity).ToString("C"))</td>
+                    <td class="text-center align-middle">
+                        <form asp-action="Delete" method="post">
+                            <button type="submit" class="btn btn-danger rounded rounded-3 delete-link" asp-action="Remove" asp-route-cartId="@item.Id">
+                                <i class="bi bi-trash3"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4>Total: <span class="text-success">@Model.Total.ToString("C")</span></h4>
+
+        <form asp-action="Summary" method="get">
+            <button type="submit" class="btn btn-success">Proceed to Checkout</button>
+        </form>
+
+        <form asp-action="Clear" method="post">
+            <button type="submit" class="btn btn-danger">Clear Cart</button>
+        </form>
+    </div>
+}

@@ -1,0 +1,40 @@
+﻿@model GameEngine.ViewModels.OrderSummaryViewModel
+
+<h2>Order Summary</h2>
+<hr />
+<p><strong>Name:</strong> @Model.UserName</p>
+<p><strong>Email:</strong> @Model.Email</p>
+<p><strong>Phone:</strong> @Model.PhoneNumber</p>
+<p><strong>Address:</strong> @Model.Address</p>
+<p><strong>Order Date:</strong> @Model.OrderDate.ToString("g")</p>
+
+<h4>Items:</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-center align-middle">Game</th>
+            <th class="text-center align-middle">Device</th>
+            <th class="text-center align-middle">Qty</th>
+            <th class="text-center align-middle">Price per item</th>
+            <th class="text-center align-middle">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td class="text-center align-middle">@item.Game.Name</td>
+                <td class="text-center align-middle">@item.Device.Name</td>
+                <td class="text-center align-middle">@item.Quantity</td>
+                <td class="text-center align-middle">@item.Game.Price.ToString("C")</td>
+                <td class="text-center align-middle">@((item.Quantity * item.Game.Price).ToString("C"))</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h4 class="text-success">Total: @Model.Total.ToString("C")</h4>
+
+<form asp-action="CreateStripeSession" method="post">
+    <button type="submit" class="btn btn-primary">Pay Now</button>
+</form>

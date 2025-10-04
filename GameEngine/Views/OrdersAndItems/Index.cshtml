@@ -1,0 +1,59 @@
+﻿@model IEnumerable<GameEngine.Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Orders</h1>
+
+
+<table class="table justify-content-center align-items-center table-hover">
+    <thead>
+        <tr>
+            <th class="text-center align-middle">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th class="text-center align-middle">
+                @Html.DisplayNameFor(model => model.ApplicationUserId)
+            </th>
+            <th class="text-center align-middle">
+                @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
+            </th>
+            <th class ="text-center align-middle">
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th class="text-center align-middle">
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </th>
+            <th class="text-center align-middle">
+                Order Details
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="text-center align-middle">
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td class="text-center align-middle">
+                @Html.DisplayFor(modelItem => item.ApplicationUserId)
+            </td>
+            <td class="text-center align-middle">
+                @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
+            </td>
+            <td class="text-center align-middle">
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td class="text-center align-middle">
+                @item.TotalPrice.ToString("C")
+            </td>
+            <td class="text-center align-middle">
+                <a class="btn btn-secondary rounded rounded-3" asp-action="ItemsDetails" asp-route-orderId="@item.Id">
+                    <i class="bi bi-clipboard2-data"></i>
+                </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

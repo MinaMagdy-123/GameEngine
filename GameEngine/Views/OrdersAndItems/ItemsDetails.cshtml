@@ -1,0 +1,58 @@
+﻿@model IEnumerable<OrderItem>
+
+@{
+    ViewData["Title"] = "ItemsDetails";
+}
+
+<h1>ItemsDetails</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-center align-middle">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th class="text-center align-middle">
+                Game
+            </th>
+            <th class="text-center align-middle">
+                Device
+            </th>
+            <th class="text-center align-middle">
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th class="text-center align-middle">
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th class="text-center align-middle">
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="text-center align-middle">
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td class="text-center align-middle">
+                @Html.DisplayFor(modelItem => item.Game.Name)
+            </td>
+            <td class="text-center align-middle">
+                @Html.DisplayFor(modelItem => item.Device.Name)
+            </td>
+            <td class="text-center align-middle">
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td class="text-center align-middle">
+                @item.Price.ToString("C")
+            </td>
+            <td class="text-center align-middle">
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

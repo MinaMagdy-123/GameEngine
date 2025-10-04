@@ -147,7 +147,8 @@ The system database is designed around the following core entities:
   Authentication, roles, password hashing, session management  
 
 - **Stripe.net**  
-  Integrated to handle **secure payment processing during checkout**  
+  Integrated to handle **secure payment processing during checkout**
+  **Note!**: Put your Stripe Keys in appsettings.json file   
 
 ---
 

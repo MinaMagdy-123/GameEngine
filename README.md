@@ -40,6 +40,8 @@ The system database is designed around the following core entities:
 - **OrderItems**: Items within each order (game, device, quantity, price)  
 - **ApplicationUser**: Custom user model with `Address` field  
 
+![Database Diagram](./Database Diagram/diagram.png) 
+
 ---
 
 ## 3. Models Description
